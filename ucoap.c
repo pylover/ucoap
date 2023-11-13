@@ -15,7 +15,8 @@
 
 
 
-static ucoap_error init_coap_driver(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd);
+static ucoap_error init_coap_driver(ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd);
 static void deinit_coap_driver(ucoap_handle * handle);
 
 
@@ -38,8 +39,8 @@ void ucoap_debug(ucoap_handle * const handle, const bool enable)
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_send_coap_request(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd)
-{
+ucoap_error ucoap_send_coap_request(ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd) {
     ucoap_error err;
 
     if (UCOAP_CHECK_STATUS(handle, UCOAP_SENDING_PACKET)) {
@@ -103,11 +104,12 @@ ucoap_error ucoap_rx_byte(ucoap_handle * const handle, const uint8_t byte)
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf, const uint32_t len)
-{
+ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf,
+        const uint32_t len) {
     if (UCOAP_CHECK_STATUS(handle, UCOAP_WAITING_RESP)) {
 
-        mem_copy(handle->response.buf, buf, len < UCOAP_MAX_PDU_SIZE ? len : UCOAP_MAX_PDU_SIZE);
+        mem_copy(handle->response.buf, buf,
+                len < UCOAP_MAX_PDU_SIZE? len: UCOAP_MAX_PDU_SIZE);
         handle->response.len = len;
 
         if (len < UCOAP_MAX_PDU_SIZE) {
@@ -130,8 +132,8 @@ ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf, co
  *
  * @return status of operation
  */
-static ucoap_error init_coap_driver(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd)
-{
+static ucoap_error init_coap_driver(ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd) {
     ucoap_error err;
 
     err = UCOAP_OK;
@@ -152,7 +154,8 @@ static ucoap_error init_coap_driver(ucoap_handle * const handle, const ucoap_req
 
     if (reqd->type == UCOAP_MESSAGE_CON || reqd->response_callback != NULL) {
         if (handle->response.buf == NULL) {
-            err = ucoap_alloc_mem_block(&handle->response.buf, UCOAP_MAX_PDU_SIZE);
+            err = ucoap_alloc_mem_block(&handle->response.buf,
+                    UCOAP_MAX_PDU_SIZE);
         }
     }
 
@@ -181,5 +184,3 @@ static void deinit_coap_driver(ucoap_handle * handle)
     handle->request.len = 0;
     handle->response.len = 0;
 }
-
-

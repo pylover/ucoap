@@ -6,14 +6,15 @@ Allows to add the CoAP functionality for embedded device.
 
 - Very small memory consumption (in the common case it may be about of 200 
   bytes for both rx/tx buffers, you can tune a PDU size)
-- Implemented CoAP over UDP [rfc7252](https://tools.ietf.org/html/rfc7252)
+- Implemented CoAP over UDP 
+  [rfc7252](https://tools.ietf.org/html/rfc7252)
 - Implemented CoAP over TCP 
   [draft-coap-tcp-tls-07](https://tools.ietf.org/html/draft-ietf-core-coap-tcp-tls-07)
 - Retransmition/acknowledgment functionality
 - Parsing of responses. Received data will be return to the user via callback.
 - Helpers for block-wise mode. The block-wise mode is located at a higher 
   level of abstraction than this implementation.
-  See [wiki](https://github.com/Mozilla9/tiny-coap/wiki/Block-wise-mode-example) for example.
+  See `examples` directory.
 
 
 #### How to send CoAP request to server
@@ -25,20 +26,24 @@ Allows to add the CoAP functionality for embedded device.
 
 ```
 
-There are several functions in the `ucoap.h` which are declared how `external`. You should provide it implementation in your code. See [wiki](https://github.com/Mozilla9/tiny-coap/wiki) for common case of their implementation.
+There are several functions in the `ucoap.h` which are declared how 
+`external`. You should provide it implementation in your code. 
+See `examples` directory for common case of their implementation.
 
-```
+```C
 /**
  * @brief In this function user should implement a transmission given data via 
  *        hardware interface (e.g. serial port)
  * 
  */
 extern ucoap_error 
-ucoap_tx_data(ucoap_handle * const handle, const uint8_t * buf, const uint32_t len);
+ucoap_tx_data(ucoap_handle * const handle, const uint8_t * buf, 
+        const uint32_t len);
 
 
 /**
- * @brief In this function user should implement a functionality of waiting response. 
+ * @brief In this function user should implement a functionality of waiting 
+ *        response. 
  *        This function has to return a control when timeout will expired or 
  *        when response from server will be received.
  */
@@ -102,7 +107,7 @@ extern bool mem_cmp(const void * dst, const void * src, uint32_t cnt);
 
 2) Define a `ucoap_handle` object, e.g.
 
-```
+```C
 ucoap_handle tc_handle = {
         .name = "coap_over_gsm",
         .transport = UCOAP_UDP
@@ -111,9 +116,11 @@ ucoap_handle tc_handle = {
 ```
 
 
-3) Implement a transfer of incoming data from your hardware interface (e.g. serial port) to the `ucoap` either `ucoap_rx_byte` or `ucoap_rx_packet`. E.g.
+3) Implement a transfer of incoming data from your hardware interface 
+(e.g. serial port) to the `ucoap` either `ucoap_rx_byte` or `ucoap_rx_packet`. 
+E.g.
 
-```
+```C
 void uart1_rx_irq_handler()
 {
     uint8_t byte = UART1->DR;    
@@ -130,7 +137,7 @@ void eth_rx_irq_handler(uint8_t * data, uint32_t len)
 
 4) Send a coap request and get back response data in the provided callback:
 
-```
+```C
 
 static void data_resource_response_callback(const struct ucoap_request_descriptor * const reqd, const ucoap_result_data * const result)
 {
