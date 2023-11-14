@@ -2,21 +2,6 @@
 
 Allows to add the CoAP functionality for embedded device.
 
-#### Features
-
-- Very small memory consumption (in the common case it may be about of 200 
-  bytes for both rx/tx buffers, you can tune a PDU size)
-- Implemented CoAP over UDP 
-  [rfc7252](https://tools.ietf.org/html/rfc7252)
-- Implemented CoAP over TCP 
-  [draft-coap-tcp-tls-07](https://tools.ietf.org/html/draft-ietf-core-coap-tcp-tls-07)
-- Retransmition/acknowledgment functionality
-- Parsing of responses. Received data will be return to the user via callback.
-- Helpers for block-wise mode. The block-wise mode is located at a higher 
-  level of abstraction than this implementation.
-  See `examples` directory.
-
-
 #### How to send CoAP request to server
 
 1) Include `ucoap.h` in your code.
