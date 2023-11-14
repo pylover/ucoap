@@ -113,7 +113,7 @@ ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf,
         handle->response.len = len;
 
         if (len < UCOAP_MAX_PDU_SIZE) {
-            ucoap_tx_signal(handle, UCOAP_RESPONSE_DID_RECEIVE);
+            coap_tx_signal(handle, UCOAP_RESPONSE_DID_RECEIVE);
             return UCOAP_OK;
         }
 

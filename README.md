@@ -52,7 +52,8 @@ ucoap_wait_event(ucoap_handle * const handle, const uint32_t timeout_ms);
 
 
 /**
- * @brief Through this function the 'ucoap' lib will be notifying about events.
+ * @brief Through this function the 'ucoap' lib will be notifying about 
+ *        events.
  *        See possible events here 'ucoap_out_signal'.
  */
 extern ucoap_error 
@@ -72,33 +73,42 @@ ucoap_get_message_id(ucoap_handle * const handle);
  * 
  */
 extern ucoap_error 
-ucoap_fill_token(ucoap_handle * const handle, uint8_t * token, const uint32_t tkl);
+ucoap_fill_token(ucoap_handle * const handle, uint8_t * token, 
+        const uint32_t tkl);
 
 
 /**
- * @brief These functions are using for debug purpose, if user will enable debug mode.
+ * @brief These functions are using for debug purpose, if user will enable 
+ *        debug mode.
  * 
  */
-extern void ucoap_debug_print_packet(ucoap_handle * const handle, const char * msg, uint8_t * data, const uint32_t len);
-extern void ucoap_debug_print_options(ucoap_handle * const handle, const char * msg, const ucoap_option_data * options);
-extern void ucoap_debug_print_payload(ucoap_handle * const handle, const char * msg, const ucoap_data * const payload);
+extern void ucoap_debug_print_packet(ucoap_handle * const handle, 
+        const char * msg, uint8_t * data, const uint32_t len);
+extern void ucoap_debug_print_options(ucoap_handle * const handle, 
+        const char * msg, const ucoap_option_data * options);
+extern void ucoap_debug_print_payload(ucoap_handle * const handle, 
+        const char * msg, const ucoap_data * const payload);
 
 
 /**
- * @brief In this function user should implement an allocating block of memory.
+ * @brief In this function user should implement an allocating block of 
+ *        memory.
  *        In the simple case it may be a static buffer. The 'UCOAP' will make
- *        two calls of this function before starting work (for rx and tx buffer).
+ *        two calls of this function before starting work (for rx and tx 
+ *        buffer).
  *        So, you should have minimum two separate blocks of memory.
  * 
  */
-extern ucoap_error ucoap_alloc_mem_block(uint8_t ** block, const uint32_t min_len);
+extern ucoap_error ucoap_alloc_mem_block(uint8_t ** block, 
+        const uint32_t min_len);
 
 
 /**
  * @brief In this function user should implement a freeing block of memory.
  * 
  */
-extern ucoap_error ucoap_free_mem_block(uint8_t * block, const uint32_t min_len);
+extern ucoap_error ucoap_free_mem_block(uint8_t * block, 
+        const uint32_t min_len);
 
 extern void mem_copy(void * dst, const void * src, uint32_t cnt);
 extern bool mem_cmp(const void * dst, const void * src, uint32_t cnt);
@@ -121,14 +131,12 @@ ucoap_handle tc_handle = {
 E.g.
 
 ```C
-void uart1_rx_irq_handler()
-{
+void uart1_rx_irq_handler() {
     uint8_t byte = UART1->DR;    
     ucoap_rx_byte(&tc_handle, byte);
 }
 
-void eth_rx_irq_handler(uint8_t * data, uint32_t len)
-{
+void eth_rx_irq_handler(uint8_t * data, uint32_t len) {
     ucoap_rx_packet(&tc_handle, data, len);
 }
 
@@ -139,14 +147,15 @@ void eth_rx_irq_handler(uint8_t * data, uint32_t len)
 
 ```C
 
-static void data_resource_response_callback(const struct ucoap_request_descriptor * const reqd, const ucoap_result_data * const result)
-{
+static void data_resource_response_callback(
+        const struct ucoap_request_descriptor * const reqd, 
+        const ucoap_result_data * const result) {
     // ... check response
 }
 
 
-void send_request_to_data_resource(uint32_t *token_etag, uint8_t * data, uint32_t len)
-{
+void send_request_to_data_resource(uint32_t *token_etag, 
+        uint8_t * data, uint32_t len) {
     ucoap_error err;
     ucoap_request_descriptor data_request;
 
@@ -156,7 +165,8 @@ void send_request_to_data_resource(uint32_t *token_etag, uint8_t * data, uint32_
 
     /* fill options - we should adhere an order of options */
     opt_content.num = UCOAP_CONTENT_FORMAT_OPT;
-    opt_content.value = (uint8_t *)"\x2A";  /* 42 = UCOAP_APPLICATION_OCTET_STREAM */
+    /* 42 = UCOAP_APPLICATION_OCTET_STREAM */
+    opt_content.value = (uint8_t *)"\x2A";
     opt_content.len = 1;
     opt_content.next = NULL;
 
@@ -176,7 +186,8 @@ void send_request_to_data_resource(uint32_t *token_etag, uint8_t * data, uint32_
 
     data_request.code = UCOAP_REQ_POST;
     data_request.tkl = 2;
-    data_request.type = tc_handle.transport == UCOAP_UDP ? UCOAP_MESSAGE_CON : UCOAP_MESSAGE_NON;
+    data_request.type = tc_handle.transport == UCOAP_UDP? UCOAP_MESSAGE_CON: 
+        UCOAP_MESSAGE_NON;
     data_request.options = &opt_etag;
     
     /* define the callback for response data */
