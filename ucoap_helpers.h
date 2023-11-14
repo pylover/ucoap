@@ -7,17 +7,12 @@
  */
 
 
-#ifndef __UCOAP_HELPERS_H
-#define __UCOAP_HELPERS_H
+#ifndef _UCOAP_UCOAP_HELPERS_H_
+#define _UCOAP_UCOAP_HELPERS_H_
 
 
 #include <stdint.h>
 #include "ucoap.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 typedef enum {
@@ -94,8 +89,4 @@ void ucoap_extract_block2_from_opt(const ucoap_option_data * const block2, ucoap
 const ucoap_option_data * ucoap_find_option_by_number(const ucoap_option_data * options, const uint16_t opt_num);
 
 
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* __UCOAP_HELPERS_H */
+#endif /* _UCOAP_UCOAP_HELPERS_H_ */

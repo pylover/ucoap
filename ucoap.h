@@ -14,22 +14,12 @@
  */
 
 
-#ifndef __UCOAP_H
-#define __UCOAP_H
+#ifndef UCOAP_UCOAP_H_
+#define UCOAP_UCOAP_H_
 
 
 #include <stdint.h>
 #include <stdbool.h>
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-#ifndef NUUL
-#define NULL ((void *)0)
-#endif /* NUUL */
 
 
 #define UCOAP_DEFAULT_VERSION           1
@@ -431,8 +421,4 @@ ucoap_error ucoap_rx_byte(ucoap_handle * const handle, const uint8_t byte);
 ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf, const uint32_t len);
 
 
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* __UCOAP_H */
+#endif /* _UCOAP_UCOAP_H_ */

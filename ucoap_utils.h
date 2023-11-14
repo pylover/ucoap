@@ -1,22 +1,26 @@
-/**
- * ucoap_utils.h
+// Copyright 2023 Vahid Mardani
+/*
+ * This file is part of ucoap.
+ *  ucoap is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or (at your
+ *  option) any later version.
  *
- * Author: Serge Maslyakov, rusoil.9@gmail.com
- * Copyright 2017 Serge Maslyakov. All rights reserved.
+ *  ucoap is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ *  or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ *  for more details.
  *
+ *  You should have received a copy of the GNU General Public License along
+ *  with ucoap. If not, see <https://www.gnu.org/licenses/>.
+ *
+ *  Author: Vahid Mardani <vahid.mardani@gmail.com>
  */
-
-
-#ifndef __UCOAP_UTILS_H
-#define __UCOAP_UTILS_H
+#ifndef _UCOAP_UCOAP_UTILS_H_
+#define _UCOAP_UCOAP_UTILS_H_
 
 
 #include "ucoap.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 #define UCOAP_CHECK_STATUS(h,s)      ((h)->statuses_mask & (s))
@@ -67,11 +71,13 @@ typedef enum {
  * @brief Encoding options and add it to the packet
  *
  * @param buf - pointer on packet buffer
- * @param option - pointer on first element of linked list of options. Must not be NULL.
+ * @param option - pointer on first element of linked list of options.
+          Must not be NULL.
  *
  * @return length of data that was added to the buffer
  */
-uint32_t encoding_options(uint8_t * const buf, const ucoap_option_data * option);
+uint32_t encoding_options(uint8_t * const buf,
+        const ucoap_option_data * option);
 
 
 /**
@@ -80,7 +86,8 @@ uint32_t encoding_options(uint8_t * const buf, const ucoap_option_data * option)
  * @param response - incoming packet
  * @param option - pointer on first element of linked list
  * @param opt_start_idx - index of options in the incoming packet
- * @param payload_start_idx - pointer on variable for storing idx of payload in the incoming packet
+ * @param payload_start_idx - pointer on variable for storing idx of payload
+          in the incoming packet
  *
  * @return status of operations
  */
@@ -101,9 +108,4 @@ ucoap_error decoding_options(const ucoap_data * const response,
 uint32_t fill_payload(uint8_t * const buf, const ucoap_data * const payload);
 
 
-#ifdef  __cplusplus
-}
-#endif
-
-
-#endif /* __UCOAP_UTILS_H */
+#endif /* _UCOAP_UCOAP_UTILS_H_ */

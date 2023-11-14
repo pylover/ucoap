@@ -7,16 +7,11 @@
  */
 
 
-#ifndef __UCOAP_UDP_H
-#define __UCOAP_UDP_H
+#ifndef _UCOAP_UCOAP_UDP_H_
+#define _UCOAP_UCOAP_UDP_H_
 
 
 #include "ucoap.h"
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 /**
@@ -48,8 +43,4 @@ extern "C" {
 ucoap_error ucoap_send_coap_request_udp(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd);
 
 
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* __UCOAP_UDP_H */
+#endif /* _UCOAP_UCOAP_UDP_H_ */
