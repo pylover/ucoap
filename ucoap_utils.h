@@ -93,7 +93,7 @@ uint32_t encoding_options(uint8_t * const buf,
  */
 ucoap_error decoding_options(const ucoap_data * const response,
         ucoap_option_data * option,
-        const uint32_t const opt_start_idx,
+        const uint32_t opt_start_idx,
         uint32_t * const payload_start_idx);
 
 

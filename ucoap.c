@@ -5,14 +5,13 @@
  * Copyright 2017 Serge Maslyakov. All rights reserved.
  *
  */
-
+#include <stddef.h>
 
 #include "ucoap.h"
 
 #include "ucoap_udp.h"
 #include "ucoap_tcp.h"
 #include "ucoap_utils.h"
-
 
 
 static ucoap_error init_coap_driver(ucoap_handle * const handle,
@@ -113,7 +112,7 @@ ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf,
         handle->response.len = len;
 
         if (len < UCOAP_MAX_PDU_SIZE) {
-            coap_tx_signal(handle, UCOAP_RESPONSE_DID_RECEIVE);
+            ucoap_tx_signal(handle, UCOAP_RESPONSE_DID_RECEIVE);
             return UCOAP_OK;
         }
 
@@ -169,8 +168,7 @@ static ucoap_error init_coap_driver(ucoap_handle * const handle,
  * @param handle - coap handle
  *
  */
-static void deinit_coap_driver(ucoap_handle * handle)
-{
+static void deinit_coap_driver(ucoap_handle * handle) {
     if (handle->response.buf != NULL) {
         ucoap_free_mem_block(handle->response.buf, UCOAP_MAX_PDU_SIZE);
         handle->response.buf = NULL;
