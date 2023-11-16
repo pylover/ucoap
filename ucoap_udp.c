@@ -31,10 +31,18 @@ typedef struct {
 
 
 
-static void asemble_request(ucoap_handle * const handle, ucoap_data * const request, const ucoap_request_descriptor * const reqd);
-static uint32_t parse_response(const ucoap_data * const request, const ucoap_data * const response);
-static void asemble_ack(ucoap_data * const ack, const ucoap_data * const response);
-static ucoap_error waiting_ack(ucoap_handle * const handle, const ucoap_data * const request);
+static void
+asemble_request(struct ucoap_handle * const handle,
+        ucoap_data * const request,
+        const ucoap_request_descriptor * const reqd);
+static uint32_t
+parse_response(const ucoap_data * const request,
+        const ucoap_data * const response);
+static void
+asemble_ack(ucoap_data * const ack, const ucoap_data * const response);
+static ucoap_error
+waiting_ack(struct ucoap_handle * const handle,
+        const ucoap_data * const request);
 
 
 
@@ -42,8 +50,9 @@ static ucoap_error waiting_ack(ucoap_handle * const handle, const ucoap_data * c
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_send_coap_request_udp(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd)
-{
+enum ucoap_error
+ucoap_send_coap_request_udp(ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd) {
     ucoap_error err;
     uint32_t resp_mask;
     ucoap_result_data result;

@@ -14,9 +14,11 @@
 #include "ucoap_utils.h"
 
 
-static ucoap_error init_coap_driver(ucoap_handle * const handle,
+static enum ucoap_error
+init_coap_driver(struct ucoap_handle * const handle,
         const ucoap_request_descriptor * const reqd);
-static void deinit_coap_driver(ucoap_handle * handle);
+static void
+deinit_coap_driver(struct ucoap_handle * handle);
 
 
 
@@ -24,8 +26,8 @@ static void deinit_coap_driver(ucoap_handle * handle);
  * @brief See description in the header file.
  *
  */
-void ucoap_debug(ucoap_handle * const handle, const bool enable)
-{
+void
+ucoap_debug(struct ucoap_handle * const handle, const bool enable) {
     if (enable) {
         UCOAP_SET_STATUS(handle, UCOAP_DEBUG_ON);
     } else {
@@ -38,9 +40,10 @@ void ucoap_debug(ucoap_handle * const handle, const bool enable)
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_send_coap_request(ucoap_handle * const handle,
+enum ucoap_error
+ucoap_send_coap_request(struct ucoap_handle * const handle,
         const ucoap_request_descriptor * const reqd) {
-    ucoap_error err;
+    enum ucoap_error err;
 
     if (UCOAP_CHECK_STATUS(handle, UCOAP_SENDING_PACKET)) {
         return UCOAP_BUSY_ERROR;
@@ -81,8 +84,8 @@ ucoap_error ucoap_send_coap_request(ucoap_handle * const handle,
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_rx_byte(ucoap_handle * const handle, const uint8_t byte)
-{
+enum ucoap_error
+ucoap_rx_byte(struct ucoap_handle * const handle, const uint8_t byte) {
     if (UCOAP_CHECK_STATUS(handle, UCOAP_WAITING_RESP)) {
 
         if (handle->response.len < UCOAP_MAX_PDU_SIZE) {
@@ -103,7 +106,8 @@ ucoap_error ucoap_rx_byte(ucoap_handle * const handle, const uint8_t byte)
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf,
+enum ucoap_error
+ucoap_rx_packet(struct ucoap_handle * const handle, const uint8_t * buf,
         const uint32_t len) {
     if (UCOAP_CHECK_STATUS(handle, UCOAP_WAITING_RESP)) {
 
@@ -131,9 +135,10 @@ ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf,
  *
  * @return status of operation
  */
-static ucoap_error init_coap_driver(ucoap_handle * const handle,
+static enum ucoap_error
+init_coap_driver(struct ucoap_handle * const handle,
         const ucoap_request_descriptor * const reqd) {
-    ucoap_error err;
+    enum ucoap_error err;
 
     err = UCOAP_OK;
     handle->request.len = 0;
@@ -168,7 +173,8 @@ static ucoap_error init_coap_driver(ucoap_handle * const handle,
  * @param handle - coap handle
  *
  */
-static void deinit_coap_driver(ucoap_handle * handle) {
+static void
+deinit_coap_driver(struct ucoap_handle * handle) {
     if (handle->response.buf != NULL) {
         ucoap_free_mem_block(handle->response.buf, UCOAP_MAX_PDU_SIZE);
         handle->response.buf = NULL;

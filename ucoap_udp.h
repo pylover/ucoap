@@ -40,7 +40,9 @@
  *
  * @return status of operation
  */
-ucoap_error ucoap_send_coap_request_udp(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd);
+enum ucoap_error
+ucoap_send_coap_request_udp(struct ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd);
 
 
 #endif /* _UCOAP_UCOAP_UDP_H_ */

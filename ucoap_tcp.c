@@ -49,7 +49,10 @@ typedef struct {
 
 
 
-static void asemble_request(ucoap_handle * const handle, ucoap_data * const request, const ucoap_request_descriptor * const reqd);
+static void
+asemble_request(struct ucoap_handle * const handle,
+        ucoap_data * const request,
+        const ucoap_request_descriptor * const reqd);
 static uint32_t parse_response(const ucoap_data * const request, const ucoap_data * const response, uint32_t * const options_shift);
 static uint32_t extract_data_length(ucoap_tcp_header * const header, const uint8_t * const buf);
 static void shift_data(uint8_t * dst, const uint8_t * src, uint32_t len);
@@ -60,8 +63,9 @@ static void shift_data(uint8_t * dst, const uint8_t * src, uint32_t len);
  * @brief See description in the header file.
  *
  */
-ucoap_error ucoap_send_coap_request_tcp(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd)
-{
+enum ucoap_error
+ucoap_send_coap_request_tcp(struct ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd) {
     ucoap_error err;
     uint32_t resp_mask;
     uint32_t option_start_idx;
@@ -168,8 +172,10 @@ ucoap_error ucoap_send_coap_request_tcp(ucoap_handle * const handle, const ucoap
  * @param reqd - descriptor of request
  *
  */
-static void asemble_request(ucoap_handle * const handle, ucoap_data * const request, const ucoap_request_descriptor * const reqd)
-{
+static void
+asemble_request(struct ucoap_handle * const handle,
+        ucoap_data * const request,
+        const ucoap_request_descriptor * const reqd) {
     uint32_t options_shift;
     uint32_t options_len;
     ucoap_tcp_len_header header;

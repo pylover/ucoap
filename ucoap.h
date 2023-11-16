@@ -59,8 +59,7 @@
 
 
 
-typedef enum {
-
+enum ucoap_error{
     UCOAP_OK = 0,
     UCOAP_BUSY_ERROR,
     UCOAP_PARAM_ERROR,
@@ -76,12 +75,10 @@ typedef enum {
 
     UCOAP_NO_OPTIONS_ERROR,
     UCOAP_WRONG_OPTIONS_ERROR
+};
 
-} ucoap_error;
 
-
-typedef enum {
-
+enum ucoap_outsignal{
     UCOAP_ROUTINE_PACKET_WILL_START = 0,
     UCOAP_ROUTINE_PACKET_DID_FINISH,
 
@@ -95,57 +92,45 @@ typedef enum {
     UCOAP_RESPONSE_BYTE_DID_RECEIVE,
     UCOAP_RESPONSE_TO_LONG_ERROR,
     UCOAP_RESPONSE_DID_RECEIVE
+};
 
-} ucoap_out_signal;
 
-
-typedef enum {
-
+enum ucoap_transport{
     UCOAP_UDP = 0,
     UCOAP_TCP,
     UCOAP_SMS
+};
 
-} ucoap_transport;
 
-
-typedef enum {
-
+enum ucoap_udpmsg {
     UCOAP_MESSAGE_CON = 0,   /* confirmable message (requires ACK/RST) */
     UCOAP_MESSAGE_NON = 1,   /* non-confirmable message (one-shot message) */
     UCOAP_MESSAGE_ACK = 2,   /* used to acknowledge confirmable messages */
     UCOAP_MESSAGE_RST = 3    /* indicates error in received messages */
+};
 
-} ucoap_udp_message;
 
-
-typedef enum {
-
+enum ucoap_class {
     UCOAP_REQUEST_CLASS = 0,
     UCOAP_SUCCESS_CLASS = 2,
     UCOAP_BAD_REQUEST_CLASS = 4,
     UCOAP_SERVER_ERR_CLASS = 5,
-
     UCOAP_TCP_SIGNAL_CLASS = 7
+};
 
-} ucoap_class;
 
-
-typedef enum {
-
+enum ucoap_packetcode {
     UCOAP_CODE_EMPTY_MSG = UCOAP_CODE(0, 0),
-
     UCOAP_REQ_GET = UCOAP_CODE(UCOAP_REQUEST_CLASS, 1),
     UCOAP_REQ_POST = UCOAP_CODE(UCOAP_REQUEST_CLASS, 2),
     UCOAP_REQ_PUT = UCOAP_CODE(UCOAP_REQUEST_CLASS, 3),
     UCOAP_REQ_DEL = UCOAP_CODE(UCOAP_REQUEST_CLASS, 4),
-
     UCOAP_RESP_SUCCESS_OK_200 = UCOAP_CODE(UCOAP_SUCCESS_CLASS, 0),
     UCOAP_RESP_SUCCESS_CREATED_201 = UCOAP_CODE(UCOAP_SUCCESS_CLASS, 1),
     UCOAP_RESP_SUCCESS_DELETED_202 = UCOAP_CODE(UCOAP_SUCCESS_CLASS, 2),
     UCOAP_RESP_SUCCESS_VALID_203 = UCOAP_CODE(UCOAP_SUCCESS_CLASS, 3),
     UCOAP_RESP_SUCCESS_CHANGED_204 = UCOAP_CODE(UCOAP_SUCCESS_CLASS, 4),
     UCOAP_RESP_SUCCESS_CONTENT_205 = UCOAP_CODE(UCOAP_SUCCESS_CLASS, 5),
-
     UCOAP_RESP_ERROR_BAD_REQUEST_400 = UCOAP_CODE(UCOAP_BAD_REQUEST_CLASS, 0),
     UCOAP_RESP_ERROR_UNAUTHORIZED_401 = UCOAP_CODE(UCOAP_BAD_REQUEST_CLASS, 1),
     UCOAP_RESP_BAD_OPTION_402 = UCOAP_CODE(UCOAP_BAD_REQUEST_CLASS, 2),
@@ -156,22 +141,19 @@ typedef enum {
     UCOAP_RESP_PRECONDITION_FAILED_412 = UCOAP_CODE(UCOAP_BAD_REQUEST_CLASS, 12),
     UCOAP_RESP_REQUEST_ENTITY_TOO_LARGE_413 = UCOAP_CODE(UCOAP_BAD_REQUEST_CLASS, 13),
     UCOAP_RESP_UNSUPPORTED_CONTENT_FORMAT_415 = UCOAP_CODE(UCOAP_BAD_REQUEST_CLASS, 15),
-
     UCOAP_RESP_INTERNAL_SERVER_ERROR_500 = UCOAP_CODE(UCOAP_SERVER_ERR_CLASS, 0),
     UCOAP_RESP_NOT_IMPLEMENTED_501 = UCOAP_CODE(UCOAP_SERVER_ERR_CLASS, 1),
     UCOAP_RESP_BAD_GATEWAY_502 = UCOAP_CODE(UCOAP_SERVER_ERR_CLASS, 2),
     UCOAP_RESP_SERVICE_UNAVAILABLE_503 = UCOAP_CODE(UCOAP_SERVER_ERR_CLASS, 3),
     UCOAP_RESP_GATEWAY_TIMEOUT_504 = UCOAP_CODE(UCOAP_SERVER_ERR_CLASS, 4),
     UCOAP_RESP_PROXYING_NOT_SUPPORTED_505 = UCOAP_CODE(UCOAP_SERVER_ERR_CLASS, 5),
-
     UCOAP_TCP_SIGNAL_700 = UCOAP_CODE(UCOAP_TCP_SIGNAL_CLASS, 0),
     UCOAP_TCP_SIGNAL_CSM_701 = UCOAP_CODE(UCOAP_TCP_SIGNAL_CLASS, 1),
     UCOAP_TCP_SIGNAL_PING_702 = UCOAP_CODE(UCOAP_TCP_SIGNAL_CLASS, 2),
     UCOAP_TCP_SIGNAL_PONG_703 = UCOAP_CODE(UCOAP_TCP_SIGNAL_CLASS, 3),
     UCOAP_TCP_SIGNAL_RELEASE_704 = UCOAP_CODE(UCOAP_TCP_SIGNAL_CLASS, 4),
     UCOAP_TCP_SIGNAL_ABORT_705 = UCOAP_CODE(UCOAP_TCP_SIGNAL_CLASS, 5)
-
-} ucoap_packet_code;
+};
 
 
 /**
@@ -180,8 +162,7 @@ typedef enum {
   * NoCacheKey  = (optnum & 0x1e) == 0x1c
   *
   */
-typedef enum {
-
+enum ucoap_option {
     UCOAP_IF_MATCH_OPT         = 1,
     UCOAP_URI_HOST_OPT         = 3,
     UCOAP_ETAG_OPT             = 4,
@@ -190,24 +171,19 @@ typedef enum {
     UCOAP_LOCATION_PATH_OPT    = 8,
     UCOAP_URI_PATH_OPT         = 11,
     UCOAP_CONTENT_FORMAT_OPT   = 12,
-
     UCOAP_MAX_AGE_OPT          = 14,
     UCOAP_URI_QUERY_OPT        = 15,
     UCOAP_ACCEPT_OPT           = 17,
     UCOAP_LOCATION_QUERY_OPT   = 20,
-
     UCOAP_BLOCK2_OPT           = 23,  /* blockwise option for GET */
     UCOAP_BLOCK1_OPT           = 27,  /* blockwise option for POST */
-
     UCOAP_PROXY_URI_OPT        = 35,
     UCOAP_PROXY_SCHEME_OPT     = 39,
     UCOAP_SIZE1_OPT            = 60
+};
 
-} ucoap_option;
 
-
-typedef enum {
-
+enum ucoap_mediatype {
     UCOAP_TEXT_PLAIN = 0,   /* default value */
     UCOAP_TEXT_XML = 1,
     UCOAP_TEXT_CSV = 2,
@@ -231,8 +207,7 @@ typedef enum {
     UCOAP_APPLICATION_JSON = 50,
     UCOAP_APPLICATION_X_OBIX_BINARY = 51,
     UCOAP_APPLICATION_CBOR = 60
-
-} ucoap_media_type;
+};
 
 
 typedef struct ucoap_option_data {
@@ -283,7 +258,7 @@ typedef struct ucoap_request_descriptor {
 } ucoap_request_descriptor;
 
 
-typedef struct ucoap_handle {
+struct ucoap_handle {
 
     const char * name;
     uint16_t transport;
@@ -293,7 +268,7 @@ typedef struct ucoap_handle {
     ucoap_data request;
     ucoap_data response;
 
-} ucoap_handle;
+};
 
 
 /**
@@ -301,7 +276,9 @@ typedef struct ucoap_handle {
  *        hardware interface (e.g. serial port)
  *
  */
-extern ucoap_error ucoap_tx_data(ucoap_handle * const handle, const uint8_t * buf, const uint32_t len);
+extern enum ucoap_error
+ucoap_tx_data(struct ucoap_handle * const handle, const uint8_t * buf,
+        const uint32_t len);
 
 
 /**
@@ -309,37 +286,46 @@ extern ucoap_error ucoap_tx_data(ucoap_handle * const handle, const uint8_t * bu
  *        This function has to return a control when timeout will expired or
  *        when response from server will be received.
  */
-extern ucoap_error ucoap_wait_event(ucoap_handle * const handle, const uint32_t timeout_ms);
+extern enum ucoap_error
+ucoap_wait_event(struct ucoap_handle * const handle,
+        const uint32_t timeout_ms);
 
 
 /**
  * @brief Through this function the 'ucoap' lib will be notifing about events.
  *        See possible events here 'ucoap_out_signal'.
  */
-extern ucoap_error ucoap_tx_signal(ucoap_handle * const handle, const ucoap_out_signal signal);
+extern enum ucoap_error
+ucoap_tx_signal(struct ucoap_handle * const handle,
+        const enum ucoap_outsignal signal);
 
 
 /**
  * @brief In this function user should implement a generating of message id.
  *
  */
-extern uint16_t ucoap_get_message_id(ucoap_handle * const handle);
+extern uint16_t ucoap_get_message_id(struct ucoap_handle * const handle);
 
 
 /**
  * @brief In this function user should implement a generating of token.
  *
  */
-extern ucoap_error ucoap_fill_token(ucoap_handle * const handle, uint8_t * token, const uint32_t tkl);
+extern enum ucoap_error
+ucoap_fill_token(struct ucoap_handle * const handle, uint8_t * token,
+        const uint32_t tkl);
 
 
 /**
  * @brief These functions are using for debug purpose, if user will enable debug mode.
  *
  */
-extern void ucoap_debug_print_packet(ucoap_handle * const handle, const char * msg, uint8_t * data, const uint32_t len);
-extern void ucoap_debug_print_options(ucoap_handle * const handle, const char * msg, const ucoap_option_data * options);
-extern void ucoap_debug_print_payload(ucoap_handle * const handle, const char * msg, const ucoap_data * const payload);
+extern void ucoap_debug_print_packet(struct ucoap_handle * const handle,
+        const char * msg, uint8_t * data, const uint32_t len);
+extern void ucoap_debug_print_options(struct ucoap_handle * const handle,
+        const char * msg, const ucoap_option_data * options);
+extern void ucoap_debug_print_payload(struct ucoap_handle * const handle,
+        const char * msg, const ucoap_data * const payload);
 
 
 /**
@@ -349,14 +335,16 @@ extern void ucoap_debug_print_payload(ucoap_handle * const handle, const char * 
  *        So, you should have minimum two separate blocks of memory.
  *
  */
-extern ucoap_error ucoap_alloc_mem_block(uint8_t ** block, const uint32_t min_len);
+extern enum ucoap_error
+ucoap_alloc_mem_block(uint8_t ** block, const uint32_t min_len);
 
 
 /**
  * @brief In this function user should implement a freeing mem block.
  *
  */
-extern ucoap_error ucoap_free_mem_block(uint8_t * block, const uint32_t min_len);
+extern enum ucoap_error
+ucoap_free_mem_block(uint8_t * block, const uint32_t min_len);
 
 
 /**
@@ -378,7 +366,7 @@ extern bool mem_cmp(const void * dst, const void * src, uint32_t cnt);
  *        Also you should implement 'ucoap_debug_print..' methods in your code.
  *
  */
-void ucoap_debug(ucoap_handle * const handle, const bool enable);
+void ucoap_debug(struct ucoap_handle * const handle, const bool enable);
 
 
 /**
@@ -390,7 +378,9 @@ void ucoap_debug(ucoap_handle * const handle, const bool enable);
  * @return status of operation
  *
  */
-ucoap_error ucoap_send_coap_request(ucoap_handle * const handle, const ucoap_request_descriptor * const reqd);
+enum ucoap_error
+ucoap_send_coap_request(struct ucoap_handle * const handle,
+        const ucoap_request_descriptor * const reqd);
 
 
 /**
@@ -405,7 +395,8 @@ ucoap_error ucoap_send_coap_request(ucoap_handle * const handle, const ucoap_req
  * @return status of operation
  *
  */
-ucoap_error ucoap_rx_byte(ucoap_handle * const handle, const uint8_t byte);
+enum ucoap_error
+ucoap_rx_byte(struct ucoap_handle * const handle, const uint8_t byte);
 
 
 /**
@@ -418,7 +409,9 @@ ucoap_error ucoap_rx_byte(ucoap_handle * const handle, const uint8_t byte);
  * @return status of operation
  *
  */
-ucoap_error ucoap_rx_packet(ucoap_handle * const handle, const uint8_t * buf, const uint32_t len);
+enum ucoap_error
+ucoap_rx_packet(struct ucoap_handle * const handle,
+        const uint8_t * buf, const uint32_t len);
 
 
 #endif /* _UCOAP_UCOAP_H_ */
